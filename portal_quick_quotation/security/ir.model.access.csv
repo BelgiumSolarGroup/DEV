@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_product_product_portal_user,access.product.product.portal.user,product.model_product_product,base.group_portal,1,0,0,0
+access_product_template_portal_user,access.product.template.portal.user,product.model_product_template,base.group_portal,1,0,0,0
+access_res_partner_portal_user,access.res.partner.portal.user,base.model_res_partner,base.group_portal,1,0,0,0
+access_res_groups_portal_user,access.res.groups.portal.user,base.model_res_groups,base.group_portal,1,0,0,0
