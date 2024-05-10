@@ -1,0 +1,23 @@
+{
+    "Columns": {
+        "prefix": "oocolumns",
+        "body": [
+            "id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink\n"
+        ],
+        "description": "Columns"
+    },
+    "All Group Access": {
+        "prefix": "ooaccess",
+        "body": [
+            "access_${1:model_technical_name}_all,${2:${1/[_]/./g}}.all,model_${3:${1}},,${4|1,0|},${5|1,0|},${6|1,0|},${7|1,0|}\n"
+        ],
+        "description": "Access for All Groups"
+    },
+    "Specific Group Access": {
+        "prefix": "ooaccess",
+        "body": [
+            "access_${1:model_technical_name}_${2:group_name},${3:${1/[_]/./g}}.${4:${2/[_]/./g}},model_${5:${1}},${6:group.name},${7|1,0|},${8|1,0|},${9|1,0|},${10|1,0|}\n"
+        ],
+        "description": "Access for Specific Group"
+    }
+}

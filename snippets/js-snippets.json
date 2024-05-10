@@ -1,0 +1,185 @@
+{
+    "Odoo Module": {
+        "prefix": "odoo-module",
+        "body": ["/** @odoo-module **/"],
+        "description": "Define Odoo Module"
+    },
+    "Import Component": {
+        "prefix": "imc",
+        "body": ["const { Component } = owl;"],
+        "description": "Import Component"
+    },
+    "Import Component and useState": {
+        "prefix": "imcs",
+        "body": [
+            "const { Component } = owl;",
+            "const { useState } = owl.hooks;"
+        ],
+        "description": "Import Component and useState"
+    },
+    "Component": {
+        "prefix": "oc",
+        "body": [
+            "export class ${1:MyComponent} extends Component {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Component"
+    },
+    "Component with Constructor": {
+        "prefix": "occ",
+        "body": [
+            "export class ${1:MyComponent} extends Component {",
+            "\tconstructor(...args) {",
+            "\t\tsuper(...args);",
+            "\t\t$0",
+            "\t}",
+            "}"
+        ],
+        "description": "Component with Constructor"
+    },
+    "Component with Setup": {
+        "prefix": "ocs",
+        "body": [
+            "export class ${1:MyComponent} extends Component {",
+            "\tsetup() {",
+            "\t\tsuper.setup();",
+            "\t\t$0",
+            "\t}",
+            "}"
+        ],
+        "description": "Component with Setup"
+    },
+    "Setup": {
+        "prefix": "ms",
+        "body": [
+            "setup() {",
+            "\tsuper.setup();",
+            "\t$0",
+            "}"
+        ],
+        "description": "Setup"
+    },
+    "willStart": {
+        "prefix": "mws",
+        "body": [
+            "async willStart() {",
+            "\t$0",
+            "}"
+        ],
+        "description": "willStart"
+    },
+    "mounted": {
+        "prefix": "mm",
+        "body": [
+            "mounted() {",
+            "\t$0",
+            "}"
+        ],
+        "description": "mounted"
+    },
+    "willUpdateProps": {
+        "prefix": "mwup",
+        "body": [
+            "async willUpdateProps(nextProps) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "mounted"
+    },
+    "willPatch": {
+        "prefix": "mwp",
+        "body": [
+            "willPatch() {",
+            "\t$0",
+            "}"
+        ],
+        "description": "willPatch"
+    },
+    "patched": {
+        "prefix": "mp",
+        "body": [
+            "patched() {",
+            "\t$0",
+            "}"
+        ],
+        "description": "patched"
+    },
+    "willUnmount": {
+        "prefix": "mwum",
+        "body": [
+            "willUnmount() {",
+            "\t$0",
+            "}"
+        ],
+        "description": "willUnmount"
+    },
+    "catchError": {
+        "prefix": "mce",
+        "body": [
+            "catchError(error) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "catchError"
+    },
+    "useState": {
+        "prefix": "uss",
+        "body": ["this.state = useState({ $1: $2 });"],
+        "description": "useState"
+    },
+    "useRef": {
+        "prefix": "usr",
+        "body": ["this.ref = useRef('$1');"],
+        "description": "useRef"
+    },
+    "useContext": {
+        "prefix": "usc",
+        "body": ["this.context = useContext($1);"],
+        "description": "useContext"
+    },
+    "useStore": {
+        "prefix": "ust",
+        "body": ["this.state = useStore((state) => state);"],
+        "description": "useStore"
+    },
+    "useDispatch": {
+        "prefix": "usd",
+        "body": ["this.dispatch = useDispatch();"],
+        "description": "useDispatch"
+    },
+    "onMounted": {
+        "prefix": "onm",
+        "body": ["onMounted($1)"],
+        "description": "onMounted"
+    },
+    "onWillUnmount": {
+        "prefix": "onwum",
+        "body": ["onWillUnmount($1)"],
+        "description": "onWillUnmount"
+    },
+    "onWillPatch": {
+        "prefix": "onwp",
+        "body": ["onWillPatch($1)"],
+        "description": "onWillPatch"
+    },
+    "onPatched": {
+        "prefix": "onp",
+        "body": ["onPatched($1)"],
+        "description": "onPatched"
+    },
+    "onWillStart": {
+        "prefix": "onws",
+        "body": ["onWillStart($1)"],
+        "description": "onWillStart"
+    },
+    "onWillUpdateProps": {
+        "prefix": "onwup",
+        "body": [
+            "onWillUpdateProps(nextProps => {",
+            "\t$0",
+            "});"
+        ],
+        "description": "onWillUpdateProps"
+    }
+}

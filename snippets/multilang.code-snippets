@@ -1,0 +1,10 @@
+{
+    "Domain Leaf": {
+        "scope": "python,xml",
+        "prefix": "ooleaf",
+        "body": [
+            "('${1:field_name}', '${2|=,!=,<=,<,>,>=,=?,=like,=ilike,like,not like,ilike,not ilike,in,not in,child_of,parent_of,inselect,not inselect|}', ${3:value})"
+        ],
+        "description": "Domain Leaf"
+    }
+}
