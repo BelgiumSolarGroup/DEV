@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="context">{'hide_sale': True, 'default_sale_type':'quotation'}</field>
+<!--             <field name="domain">[('sale_type','not in',['reservation'])]</field> -->
+			<field name="domain">[]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+              </p><p>
+                Your next actions should flow efficiently: confirm the Quotation
+                to a Sale Order, then create the Invoice and collect the Payment.
+              </p><p>
+                Note that once a Quotation becomes a Sale Order, it will be moved
+                from the Quotations list to the Sales Order list.
+              </p>
+            </field>
+        </record>
+       <record id="inherit_bi_view_order_form" model="ir.ui.view">
+            <field name="name">inherit.bi.view.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+            <field name="payment_term_id" position="after">
+            	<field name="sale_type"/>
+            </field>
+            
+            <field name="state" position="attributes">
+            <attribute name="statusbar_visible">draft,sent,sale,waiting,avail</attribute>
+            </field> 
+            
+            <button name="action_quotation_send" position="attributes">
+            	<attribute name="state">draft,waiting,avail</attribute>
+            </button>
+
+            <button name="action_cancel" position="attributes">
+            <attribute name="state">draft,sent,sale,waiting,avail</attribute>
+            </button>
+            <xpath expr="//button[@name='action_confirm']"
+                    position="replace">
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']"
+                    position="attributes">
+                    <attribute name="state">draft,sent,waiting,avail</attribute>
+                </xpath>
+            
+                        <button name="action_cancel" position="attributes">
+            <attribute name="state">draft,sent,sale,waiting,avail</attribute>
+            </button>
+            <header position="inside">
+            <button string="Force Availability" type="object" invisible="state not in ['draft', 'waiting', 'sent']"
+                        name="button_force_avail" class="btn-primary"/>
+            <button string="Check Availability" type="object" invisible="state not in ['draft', 'waiting', 'sent']"
+                        name="button_chk_avail" class="btn-primary"/>
+            </header>
+
+
+            </field>
+        </record>
+
+        <record id="action_quotations_inherit" model="ir.actions.act_window">
+            <field name="name">Reservations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="context">{'hide_sale': True, 'default_sale_type':'reservation'}</field>
+            <field name="domain">[('sale_type','=','reservation'),('state','=','avail')]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a Reservations, the first step of a new Reservations.
+              </p><p>
+                Your next actions should flow efficiently: confirm the Reservations
+                to a Sale Order, then create the Invoice and collect the Payment.
+              </p><p>
+                Note that once a Reservations becomes a Sale Order, it will be moved
+                from the Reservations list to the Sales Order list.
+              </p>
+            </field>
+        </record>
+        <menuitem id="menu_sale_quotations_inherit"
+                action="action_quotations_inherit" parent="sale.sale_order_menu" name="Reservations"
+                />
+     
+    </data>
+</openerp>
