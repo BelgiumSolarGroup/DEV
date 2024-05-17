@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+ 
+        <record id="view_reserved_qty_form" model="ir.ui.view">
+            <field name="name">reserved.qty.form</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order Line">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id" invisible="1"/>
+                                <field name="order_id"/>
+                                <field name="order_partner_id"/>
+                                <field name="name"/>
+                                <field name="salesman_id"/>
+                                <field name="price_unit"/>
+                                <field name="price_tax"/>
+                            </group>
+                            <group>
+                                <field name="state"/>
+                                <field name="company_id"/>
+                                <field name="product_uom_qty" string="Qty"/>
+                                <field name="qty_delivered"/>
+                                <field name="qty_invoiced"/>
+                                <field name="qty_to_invoice"/>
+                                <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                                <field name="product_uom_category_id" string="category"/>
+                                <field name="price_subtotal" sum="Total" widget="monetary"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_reserved_qty" model="ir.actions.act_window">
+            <field name="name">Reserved Qty </field>
+            <field name="res_model">sale.order.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale.view_order_line_tree"/>
+            <field name="domain" eval="[('state','=','avail')]"/>
+            <field name="context" eval="'{\'search_default_product_id\': [active_id]}'"/>
+        </record>
+
+        <record id="template_action_reserved_qty" model="ir.actions.act_window">
+            <field name="name">Template Reserved Qty </field>
+            <field name="res_model">sale.order.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="sale.view_order_line_tree"/>
+        </record>
+
+        <record id="product_kanban_view_inherit_bi" model="ir.ui.view">
+        <field name="name">bi.inherit.Product.product.kanban</field>
+        <field name="inherit_id" ref="product.product_kanban_view" />
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+                <xpath expr="//div[@name='tags']" position="before">
+                       <a name="%(action_reserved_qty)d" type="action">
+                                         <field name="reserved_count"></field> Reserved
+                                    </a>
+                </xpath>
+        </field>
+        </record>
+
+        <record id="product_template_kanban_view_inherit_bi" model="ir.ui.view">
+        <field name="name">bi.inherit.Product.template.kanban</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view" />
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+                <xpath expr="//div[@name='product_lst_price']" position="after">
+                       <a name="see_reserved_qty" type="object">
+                                         <field name="reserved_count"></field> Reserved
+                                    </a>
+                </xpath>
+        </field>
+        </record>
+
+
+
+      <!--   <record id="product.product_kanban_view" model="ir.ui.view">
+            <field name="name">Product Kanban</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="image_small"/>
+                    <field name="lst_price"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="incoming_qty"/>
+                    <field name="reserve_qty"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                           <div class="oe_kanban_global_click">
+                                <div class="o_kanban_tags_section">
+                                    <field name="attribute_value_ids" groups="product.group_product_variant"/>
+                                </div>
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('product.product', 'image_small', record.id.value)"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong><field name="name"/></strong>
+                                    <ul>
+                                        <li>Price: <field name="lst_price"></field></li>
+                                    </ul>
+                                    <ul>
+                                        <li>On Hand: <field name="qty_available"></field></li>
+                                    </ul>
+                                     <ul>
+                                        <li>Forcasted: <field name="virtual_available"></field></li>
+                                    </ul>
+                                     <ul>
+                                        <li>Reserved Quantity: <field name="reserve_qty"></field></li>
+                                    </ul>
+                                     <ul>
+                                        <li>Incoming: <field name="incoming_qty"></field></li>
+                                    </ul>
+                                    <a name="%(action_reserved_qty)d" type="action">
+                                         <field name="reserved_count"></field> Reserved
+                                    </a>
+                                    <div name="tags"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+     <record id="product.product_template_kanban_view" model="ir.ui.view">
+        <field name="name">Product.template.product.kanban</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="image_small"/>
+                <field name="lst_price"/>
+                <field name="product_variant_count"/>
+                <field name="product_variant_ids"/>
+                <field name="currency_id"/>
+                <field name="reserve_qty"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('product.template', 'image_small', record.id.value)"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong>
+                                    <span t-if="record.default_code.value">[<field name="default_code"/>]</span>
+                                    <field name="name"/>
+                                </strong>
+                                <div t-if="record.product_variant_count.value &gt; 1">
+                                    <strong>
+                                        <t t-esc="record.product_variant_count.value"/> Variants
+                                    </strong>
+                                </div>
+                                <div name="tags"/>
+                                <ul>
+                                    <li>Price: <field name="lst_price" widget="monetary"></field></li>
+                                </ul>
+                                <ul>
+                                    <li>Reserved Quantity:: <field name="reserve_qty"></field></li>
+                                </ul>
+                                <a name="see_reserved_qty" type="object">
+                                         <field name="reserved_count"></field> Reserved
+                                    </a>
+                                <div name="tags"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record> -->
+             
+    </data>
+</openerp>
